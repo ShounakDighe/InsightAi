@@ -6,6 +6,7 @@ import in.clubwebsite.insightai.entity.ProfileEntity;
 import in.clubwebsite.insightai.repository.ProfileRepository;
 import in.clubwebsite.insightai.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -28,13 +29,16 @@ public class ProfileService {
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
 
+    @Value("${app.activation.url}")
+    private String activationUrl;
+
     public ProfileDto registerProfile(ProfileDto profileDto){
         ProfileEntity newProfile = toEntity(profileDto);
         newProfile.setActivationToken(UUID.randomUUID().toString());
         newProfile = profileRepository.save(newProfile);
 
         // Send Activation mail
-        String activationLink = "http://localhost:8080/api/v1.0/activate?token=" + newProfile.getActivationToken();
+        String activationLink = activationUrl + "/api/v1.0/activate?token=" + newProfile.getActivationToken();
         String subject = "Verification Insight AI Club";
         String body = "Click on the following link for verification: " + activationLink;
         emailService.sendEmail(newProfile.getEmail(),subject,body);

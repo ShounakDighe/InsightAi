@@ -1,0 +1,34 @@
+# Maven build
+target/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Environment files (local secrets)
+.env
+.env.*
+
+# Spring Boot local config overrides
+application-*.yml
+application-*.yaml
+application-*.properties
+!application.properties   # keep the default application.properties in repo
+
+# Certificates / Keys
+*.key
+*.pem
+*.crt
+
+# Backup & temp files
+*.bak
+*.tmp
