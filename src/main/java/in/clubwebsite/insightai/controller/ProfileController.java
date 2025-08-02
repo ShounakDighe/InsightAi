@@ -35,17 +35,23 @@ public class ProfileController {
     @PostMapping("/login")
     public ResponseEntity<Map<String,Object>> login(@RequestBody AuthDto authDto) {
         try {
-            if(!profileService.isAccountActive(authDto.getEmail())) {
+            if (!profileService.isAccountActive(authDto.getEmail())) {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Map.of(
-                        "message","Account is not Verified. Please Verify your Account first."
+                        "message", "Account is not Verified. Please Verify your Account first."
                 ));
             }
-            Map<String,Object> response = profileService.authenticateAndGenerateToken(authDto);
+            Map<String, Object> response = profileService.authenticateAndGenerateToken(authDto);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of(
-                    "message",e.getMessage()
+                    "message", e.getMessage()
             ));
         }
     }
+        @GetMapping("/profile")
+        public ResponseEntity<ProfileDto> getPublicProfile(){
+            ProfileDto profileDto = profileService.getPublicProfile(null);
+            return ResponseEntity.ok(profileDto);
+        }
+
 }

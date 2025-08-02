@@ -7,7 +7,6 @@ import in.clubwebsite.insightai.repository.ProfileRepository;
 import in.clubwebsite.insightai.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Profile;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -37,13 +36,41 @@ public class ProfileService {
         newProfile.setActivationToken(UUID.randomUUID().toString());
         newProfile = profileRepository.save(newProfile);
 
-        // Send Activation mail
+        // Send Activation mail with the new styled template
         String activationLink = activationUrl + "/api/v1.0/activate?token=" + newProfile.getActivationToken();
-        String subject = "Verification Insight AI Club";
-        String body = "Click on the following link for verification: " + activationLink;
-        emailService.sendEmail(newProfile.getEmail(),subject,body);
+        String subject = "Please Verify Your Email for Insight AI Club";
+        String body = createActivationEmailBody(newProfile.getFullname(), activationLink);
+        emailService.sendEmail(newProfile.getEmail(), subject, body);
         return toDto(newProfile);
     }
+
+    /**
+     * Creates a very simple HTML email body for account activation to maximize deliverability and avoid spam filters.
+     * @param fullname The full name of the new user.
+     * @param activationLink The unique URL to activate the user's account.
+     * @return A string containing the HTML for the email body.
+     */
+    private String createActivationEmailBody(String fullname, String activationLink) {
+        return "<!DOCTYPE html>"
+                + "<html>"
+                + "<head>"
+                + "<title>Welcome to Insight AI Club!</title>"
+                + "</head>"
+                + "<body style='font-family: Arial, sans-serif; line-height: 1.6;'>"
+                + "<h2>Welcome to the Insight AI Club!</h2>"
+                + "<p>Hi " + fullname + ",</p>"
+                + "<p>Thank you for joining. Please click the link below to activate your account:</p>"
+                + "<p><a href='" + activationLink + "'>Activate Your Account</a></p>"
+                + "<p>If the link above does not work, please copy and paste this URL into your browser:</p>"
+                + "<p>" + activationLink + "</p>"
+                + "<br>"
+                + "<p>If you did not sign up for an account, you can safely ignore this email.</p>"
+                + "<br>"
+                + "<p>Best regards,<br><b>The Insight AI Team</b></p>"
+                + "</body>"
+                + "</html>";
+    }
+
 
     public ProfileEntity toEntity(ProfileDto profileDto){
         return  ProfileEntity.builder()
