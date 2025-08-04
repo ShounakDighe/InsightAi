@@ -1,10 +1,7 @@
 import { FaWhatsapp, FaInstagram, FaLinkedin } from "react-icons/fa";
-import logo from "./logo.jpeg";
-import login_bg from "./logo_bg.avif";
 
 export const assets = {
-    logo,
-    login_bg,
+    
 };
 
 export const SIDE_BAR_DATA = [

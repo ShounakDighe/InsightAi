@@ -50,7 +50,7 @@ const Menubar = () => {
                 </button>
 
                 <div className="flex items-center gap-3">
-                    <img src={assets.logo} alt="logo" className="h-10 w-10 rounded-full" />
+                    <img src="src/assets/logo.png" alt="logo" className="h-11 w-11 object-cover" />
                     <span className="text-lg font-semibold text-white truncate hidden sm:block">
                         Insight AI Club
                     </span>

@@ -95,6 +95,10 @@ public class ProfileService {
                 .build();
     }
 
+    public ProfileEntity saveProfile(ProfileEntity profile) {
+        return profileRepository.save(profile);
+    }
+
     public boolean activateProfile(String activationToken){
         return profileRepository.findByActivationToken(activationToken)
                 .map(profile->{

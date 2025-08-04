@@ -2,6 +2,7 @@ package in.clubwebsite.insightai.controller;
 
 import in.clubwebsite.insightai.dto.AuthDto;
 import in.clubwebsite.insightai.dto.ProfileDto;
+import in.clubwebsite.insightai.entity.ProfileEntity;
 import in.clubwebsite.insightai.service.ProfileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -28,7 +29,7 @@ public class ProfileController {
         if(isActivated){
             return  ResponseEntity.ok("Profile verified Successfully");
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Verification token not found or already used");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Invalid or expired activation link. Please request a new verification email by joining again.");
         }
     }
 
@@ -37,7 +38,7 @@ public class ProfileController {
         try {
             if (!profileService.isAccountActive(authDto.getEmail())) {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Map.of(
-                        "message", "Account is not Verified. Please Verify your Account first."
+                        "message", "Your email is not verified. Please check your inbox for the verification link"
                 ));
             }
             Map<String, Object> response = profileService.authenticateAndGenerateToken(authDto);
@@ -53,5 +54,23 @@ public class ProfileController {
             ProfileDto profileDto = profileService.getPublicProfile(null);
             return ResponseEntity.ok(profileDto);
         }
+
+    @PutMapping("/profile/update")
+    public ResponseEntity<Map<String, Object>> updateProfileImage(@RequestBody Map<String, String> payload) {
+        String imageUrl = payload.get("profileImageUrl");
+
+        ProfileEntity currentUser = profileService.getCurrentProfile();
+        currentUser.setProfileImageUrl(imageUrl);
+
+        ProfileEntity updatedProfile = profileService.saveProfile(currentUser);
+
+        Map<String, Object> response = Map.of(
+                "user", profileService.toDto(updatedProfile)
+        );
+
+        return ResponseEntity.ok(response);
+    }
+
+
 
 }
