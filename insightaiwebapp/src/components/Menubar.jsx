@@ -1,7 +1,8 @@
 import { LogOut, Menu, User, X } from "lucide-react";
 import { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { assets } from "../assets/assets.js";
+// Correctly import the logo image
+import logoImg from "../assets/logo.png"; 
 import { AppContext } from "../context/AppContext.jsx";
 import Sidebar from "./Sidebar.jsx";
 
@@ -50,7 +51,13 @@ const Menubar = () => {
                 </button>
 
                 <div className="flex items-center gap-3">
-                    <img src="src/assets/logo.png" alt="logo" className="h-11 w-11 object-cover" />
+                    {/* Use the imported logo variable here */}
+                    <img 
+                        src={logoImg} 
+                        alt="logo" 
+                        className="h-11 w-11 object-cover" 
+                        onError={(e) => { e.target.onerror = null; e.target.src='https://placehold.co/44x44/111827/FFFFFF?text=Logo'; }}
+                    />
                     <span className="text-lg font-semibold text-white truncate hidden sm:block">
                         Insight AI Club
                     </span>

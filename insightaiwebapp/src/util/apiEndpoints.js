@@ -1,4 +1,4 @@
-export const BASE_URL = "http://localhost:8080/api/v1.0";
+export const BASE_URL = "https://insight-ai-club.onrender.com/api/v1.0";
 const CLOUDINARY_CLOUD_NAME = "dnhurv6ti";
 
 export const API_ENDPOINTS = {

@@ -24,6 +24,18 @@ import {
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
+// --- IMPORT IMAGES --- //
+import logoImg from '/src/assets/logo.png';
+import brainwaveImg from '/src/assets/Brainwave.jpg';
+import stallImg from '/src/assets/stall.jpg';
+import inductionImg from '/src/assets/induction.jpg';
+import prasannaImg from '/src/assets/Prasanna.jpg';
+import manishRautImg from '/src/assets/ManishRaut.jpg';
+import shounakImg from '/src/assets/Shounak.jpg'; // Assuming .jpg, update if it's .HEIC or other
+import vedantImg from '/src/assets/vedant.png';
+import sachiImg from '/src/assets/sachi.jpg';
+import amanImg from '/src/assets/aman.png';
+
 
 // --- ANIMATION VARIANTS --- //
 const containerVariants = {
@@ -377,7 +389,7 @@ const LoaderWrapper = styled.div`
 
 const Logo = ({ className }) => (
   <motion.img
-    src="src/assets/logo.png"
+    src={logoImg} // Corrected
     alt="Insight AI Club Logo"
     className={`${className} object-cover`}
     onError={(e) => { e.target.onerror = null; e.target.src='https://placehold.co/100x100/020617/FFFFFF?text=Logo'; }}
@@ -751,9 +763,9 @@ export default function LandingPage() {
 
   // --- MOCK DATA --- //
   const pastEvents = [
-    { img: "src/assets/Brainwave.jpg", title: "BRAINWAVE 2025: AI & ML Workshop" },
-    { img: "src/assets/stall.jpg", title: "Stall at Make-in MIT-WPU Pavilion" },
-    { img: "src/assets/induction.jpg", title: "Induction Event" },
+    { img: brainwaveImg, title: "BRAINWAVE 2025: AI & ML Workshop" }, // Corrected
+    { img: stallImg, title: "Stall at Make-in MIT-WPU Pavilion" }, // Corrected
+    { img: inductionImg, title: "Induction Event" }, // Corrected
   ];
   
   const benefits = [
@@ -763,12 +775,12 @@ export default function LandingPage() {
   ];
   
   const team = [
-    { img: "src/assets/Prasanna.jpg", name: "Prasanna Dengale", role: "President" },
-    { img: "src/assets/ManishRaut.jpg", name: "Manish Raut", role: "Vice President" },
-    { img: "src/assets/Shounak.HEIC", name: "Shounak Dighe", role: "Tech Support" },
-    { img: "src/assets/vedant.png", name: "Vedant Chaudhari", role: "Secretary" },
-    { img: "src/assets/sachi.jpg", name: "Sachetan Debray", role: "Research Head" },
-    { img: "src/assets/aman.png", name: "Aman Kumar Padhy", role: "Technical Head" },
+    { img: prasannaImg, name: "Prasanna Dengale", role: "President" }, // Corrected
+    { img: manishRautImg, name: "Manish Raut", role: "Vice President" }, // Corrected
+    { img: shounakImg, name: "Shounak Dighe", role: "Tech Support" }, // Corrected - Note: .HEIC might need conversion to a web format like JPG or PNG
+    { img: vedantImg, name: "Vedant Chaudhari", role: "Secretary" }, // Corrected
+    { img: sachiImg, name: "Sachetan Debray", role: "Research Head" }, // Corrected
+    { img: amanImg, name: "Aman Kumar Padhy", role: "Technical Head" }, // Corrected
   ];
 
   return (
